@@ -6,7 +6,8 @@ def mir_commands():
         raise OSError('miriad is not available. Check your PATH.')
     mirpath = os.path.split(mir)[0]
     return [ cmd for cmd in os.listdir(mirpath) \
-                 if (not cmd.startswith('mir') or not cmd.startswith('doc')) ]
+                 if (not cmd.startswith('mir') or not cmd.startswith('doc')
+                     or not cmd.startswith('pg')) ]
 
 
 
