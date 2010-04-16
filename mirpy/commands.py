@@ -1,6 +1,7 @@
 import os
 
 def mir_commands():
+    """Get a filter list of miriad commands in the miriad bin directory"""
     mir = which('miriad')
     if mir is None:
         raise OSError('miriad is not available. Check your PATH.')
@@ -12,6 +13,7 @@ def mir_commands():
 
 
 def which(program='miriad'):
+    """Equivalent of unix 'which' command"""
     def is_exe(fpath):
         return os.path.exists(fpath) and os.access(fpath, os.X_OK)
     if program:

@@ -1,24 +1,37 @@
+__all__ = ["MiriadError", "Miriad"]
 import subprocess
 import warnings
 from mirpy.commands import mir_commands
 
 class MiriadError(Exception):
+    """An exception class for errors in miriad calls"""
     def __init__(self, value):
 	self.value = value
+
     def __str__(self):
 	return str(self.value)
 
+def match_in(key):
+    """Is the key  the 'in' keyword"""
+    rx = re.compile("^_?([iI][nN])_?$")
+    match = rx.match(key)
+    if match:
+        return True
+    return False
+
 def to_args(kw):
+    """Turn a key dictionary into a lsit of k=v command line arguments."""
     out = []
     for k,v in kw.items():
-        if k.startswith("_"):
-            k = k[1:]
+        if match_in(k):
+            k = "in"
         if isinstance(v, list):
             v = ",".join([str(i) for i in v])
         out.append("%s=%s" % (k,v))
     return out
 
 def mir_func(f, filter, **kw):
+    """Wrapper arounf miriad system calls"""
     def func(**kw):
         args = to_args(kw)
         proc = subprocess.Popen([f]+args, shell=False, stdout=subprocess.PIPE,
@@ -51,11 +64,38 @@ def mir_func(f, filter, **kw):
     return func
 
 class Miriad(object):
+    """A wrapper for miriad commands.
+    Miriad commands are truned into python functions, e.g.
+    
+        fits in=example.uv out=example.fits op=uvout
+
+    would be
+    
+        miriad.fits(_in="example.uv", out="blah.fits", op="uvout")
+
+
+    NOTE!!! All miriad keys are turned into the same key name in python
+    EXECEPT 'in' which is can't be used in python. The python function accepts
+    any of 'In', 'IN', '_in', or 'in_' instead.
+
+    """
     def __init__(self):
         self._common = mir_commands()
         self._filters = {}
 
     def set_filter(self, funcname, ffunc):
+        """Set a filter function to filter stdout for a miriad command.
+        Example:
+        
+             def uselessfilter(output):
+                 return output.split('\n')
+             miriad.set_filter('uvindex', uselessfilter)
+             
+        Executing miriad.uvindex will nor return a list of strings (the lines
+        in the stdout output.
+        This can of course be used for useful filtering.
+        """
+        assert funcname in self._common
         self._filters[funcname] = ffunc
         
     def __getattr__(self, k):
@@ -75,8 +115,6 @@ class Miriad(object):
         print >>p.stdin, "exit"
         stdout = p.communicate()[0]
         return str(stdout)
-        #lines = stdout.split("\n")
-        
 
 if __name__ == "__main__":
     mir = Miriad()
