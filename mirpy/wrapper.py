@@ -1,5 +1,6 @@
 import subprocess
 import warnings
+from mirpy.commands import mir_commands
 
 class MiriadError(Exception):
     def __init__(self, value):
@@ -51,7 +52,7 @@ def mir_func(f, filter, **kw):
 
 class Miriad(object):
     def __init__(self):
-        self._common =  ['uvindex', 'fits', 'imstat', 'b']
+        self._common = mir_commands()
         self._filters = {}
 
     def set_filter(self, funcname, ffunc):
@@ -79,10 +80,10 @@ class Miriad(object):
 
 if __name__ == "__main__":
     mir = Miriad()
-    def bfilt(output):
+    def uvindex_filt(output):
         lines = output.split()
         return lines
-    mir.set_filter('b', bfilt)
+    mir.set_filter('uvindex', uvindex_filt)
     help(mir.uvindex)
     print mir.uvindex(vis="wshop.uv")
     
