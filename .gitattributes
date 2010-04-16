@@ -1,1 +1,4 @@
 * text=auto !eol
+mirpy/__init__.py -text
+mirpy/wrapper.py -text
+/setup.py -text
