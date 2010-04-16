@@ -1,4 +1,5 @@
 __all__ = ["MiriadError", "Miriad"]
+import re
 import subprocess
 import warnings
 from mirpy.commands import mir_commands
