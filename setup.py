@@ -30,9 +30,19 @@ setup(name = 'mirpy',
       author_email = 'Malte.Marquarding@csiro.au',
       url = 'https://svn.atnf.csiro.au/operations/SCA/src/code/Packages/mirpy',
       keywords = ['miriad', 'astronomy', 'radio astronomy'],
-      long_description = '''This package wraps miriad commands into python functions. ''',
-      packages = find_packages(),
+      long_description = '''This package wraps miriad (http://www.atnf.csiro.au/computing/software/miriad/) commands into python functions. ''',
+      packages = find_packages(exclude=['tests', 'examples']),
       license = 'GPL',
+      classifiers=[
+        "Development Status :: 5 - Production/Stable"
+        "Intended Audience :: Science/Research",
+        "License :: OSI Approved :: GNU General Public License (GPL)",
+        "Operating System :: Unix",
+        "Programming Language :: Python",
+        "Topic :: Scientific/Engineering :: Astronomy",
+        "Topic :: Software Development :: Libraries :: Python Modules",
+      ],
+
       zip_safe = 1,
-      test_suite = "nose.collector",
+      #test_suite = "nose.collector",
 )
