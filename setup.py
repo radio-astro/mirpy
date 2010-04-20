@@ -34,7 +34,7 @@ setup(name = 'mirpy',
       packages = find_packages(exclude=['tests', 'examples']),
       license = 'GPL',
       classifiers=[
-        "Development Status :: 5 - Production/Stable"
+        "Development Status :: 5 - Production/Stable",
         "Intended Audience :: Science/Research",
         "License :: OSI Approved :: GNU General Public License (GPL)",
         "Operating System :: Unix",
