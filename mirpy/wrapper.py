@@ -21,18 +21,18 @@ def match_in(key):
     return False
 
 def to_args(kw):
-    """Turn a key dictionary into a lsit of k=v command line arguments."""
+    """Turn a key dictionary into a list of k=v command-line arguments."""
     out = []
     for k,v in kw.items():
         if match_in(k):
             k = "in"
-        if isinstance(v, list):
+        if isinstance(v, list) or isinstance(v, tuple):
             v = ",".join([str(i) for i in v])
         out.append("%s=%s" % (k,v))
     return out
 
 def mir_func(f, filter, **kw):
-    """Wrapper arounf miriad system calls"""
+    """Wrapper around miriad system calls"""
     def func(**kw):
         args = to_args(kw)
         proc = subprocess.Popen([f]+args, shell=False, stdout=subprocess.PIPE,
@@ -117,12 +117,4 @@ class Miriad(object):
         stdout = p.communicate()[0]
         return str(stdout)
 
-if __name__ == "__main__":
-    mir = Miriad()
-    def uvindex_filt(output):
-        lines = output.split()
-        return lines
-    mir.set_filter('uvindex', uvindex_filt)
-    help(mir.uvindex)
-    print mir.uvindex(vis="wshop.uv")
     
