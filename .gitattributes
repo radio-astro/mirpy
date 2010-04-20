@@ -1,6 +1,7 @@
 * text=auto !eol
 /CHANGES -text
 /LICENSE -text
+/README -text
 mirpy/__init__.py -text
 mirpy/commands.py -text
 mirpy/wrapper.py -text

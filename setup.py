@@ -20,8 +20,12 @@
 # along with this program; if not, write to the Free Software
 # Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307 USA.
 #
+import os
 from setuptools import setup
 from setuptools import find_packages
+
+def read(fname):
+    return open(os.path.join(os.path.dirname(__file__), fname)).read()
 
 setup(name = 'mirpy',
       version = 'trunk',
@@ -30,7 +34,7 @@ setup(name = 'mirpy',
       author_email = 'Malte.Marquarding@csiro.au',
       url = 'http://www.atnf.csiro.au',
       keywords = ['miriad', 'astronomy', 'radio astronomy'],
-      long_description = '''This package wraps miriad (http://www.atnf.csiro.au/computing/software/miriad/) commands into python functions. ''',
+      long_description = read("README"),
       packages = find_packages(exclude=['tests', 'examples']),
       license = 'GPL',
       classifiers=[

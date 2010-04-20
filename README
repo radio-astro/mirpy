@@ -1,0 +1,35 @@
+Introduction
+============
+
+This package wraps miriad (http://www.atnf.csiro.au/computing/software/miriad/) commands into python functions. It also warps the documentation fo miriad tasks.
+
+Example
+=======
+
+Simple
+------
+
+    >>> from mirpy import miriad
+    >>> help(miriad.uvindex)
+    >>> print miriad.uvindex(vis='myvis.uv')
+
+
+Advanced
+--------
+
+Create filter function to turn miriad stdout text into something useful.
+This example is not really useful and just demonstrates the usage. It turns 
+the miriad output string into a list of lines in teh string and returns it.
+More useful examples would be turning some output into python values you can
+work with later.
+
+    >>> from mirpy import miriad
+    >>> def uvindex_filt(output):
+    ...     return output.split('\n')
+    >>> # without filter
+    >>> print miriad.uvindex(vis='myvis.uv')
+    >>> # register filter function
+    >>> miriad.set_filer('uvindex', uvindex_filt)
+    >>> # with filter
+    >>> print miriad.uvindex(vis='myvis.uv')
+
