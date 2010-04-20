@@ -1,7 +1,9 @@
 Introduction
 ============
 
-This package wraps miriad (http://www.atnf.csiro.au/computing/software/miriad/) commands into python functions. It also warps the documentation fo miriad tasks.
+This package wraps miriad (http://www.atnf.csiro.au/computing/software/miriad/) commands into python functions. It also wraps the documentation for miriad tasks.
+
+*Note* that one exception to the miriad conventions is the keyword/parameter 'in' which can't be used in python. Use something like 'In', 'IN' or '_in' instead.
 
 Example
 =======
@@ -19,7 +21,7 @@ Advanced
 
 Create filter function to turn miriad stdout text into something useful.
 This example is not really useful and just demonstrates the usage. It turns 
-the miriad output string into a list of lines in teh string and returns it.
+the miriad output string into a list of lines in the string and returns it.
 More useful examples would be turning some output into python values you can
 work with later.
 
