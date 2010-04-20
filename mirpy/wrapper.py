@@ -89,7 +89,7 @@ class Miriad(object):
         Example:
         
              def uselessfilter(output):
-                 return output.split('\n')
+                 return output.split('\\n')
              miriad.set_filter('uvindex', uselessfilter)
              
         Executing miriad.uvindex will nor return a list of strings (the lines
