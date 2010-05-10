@@ -84,6 +84,9 @@ class Miriad(object):
         self._common = mir_commands()
         self._filters = {}
 
+    def __dir__(self):
+        return self._common + ['set_filter']
+
     def set_filter(self, funcname, ffunc):
         """Set a filter function to filter stdout for a miriad command.
         Example:
