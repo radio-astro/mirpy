@@ -31,7 +31,7 @@ def to_args(kw):
         out.append("%s=%s" % (k,v))
     return out
 
-def mir_func(f, filter, **kw):
+def mir_func(f, thefilter, **kw):
     """Wrapper around miriad system calls"""
     def func(**kw):
         args = to_args(kw)
@@ -59,8 +59,8 @@ def mir_func(f, filter, **kw):
         if proc.returncode != 0:
             raise MiriadError("\n".join(errors))
         out = stdout.strip()
-        if filter is not None:
-            return filter(out)
+        if thefilter is not None:
+            return thefilter(out)
         return out
     return func
 
@@ -104,8 +104,8 @@ class Miriad(object):
         
     def __getattr__(self, k):
         if k in self._common:
-            filter = self._filters.get(k, None)
-            fn = mir_func(k, filter)
+            thefilter = self._filters.get(k, None)
+            fn = mir_func(k, thefilter)
             fn.__doc__ = self._help(k)
             fn.func_name = k
             return fn 
