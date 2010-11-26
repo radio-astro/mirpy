@@ -31,9 +31,11 @@ def to_args(kw):
         out.append("%s=%s" % (k,v))
     return out
 
-def mir_func(f, thefilter, **kw):
+def mir_func(f, thefilter):
     """Wrapper around miriad system calls"""
-    def func(**kw):
+    def func(*args, **kw):
+        if len(args) == 1:
+            kw["_in"] = args[0]
         args = to_args(kw)
         proc = subprocess.Popen([f]+args, shell=False, stdout=subprocess.PIPE,
                                stderr=subprocess.PIPE)
