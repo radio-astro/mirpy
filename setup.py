@@ -28,7 +28,7 @@ def read(fname):
     return open(os.path.join(os.path.dirname(__file__), fname)).read()
 
 setup(name = 'mirpy',
-      version = '0.3.0',
+      version = 'trunk',
       description = 'Pure-python miriad CLI wrapper.',
       author = 'Malte Marquarding',
       author_email = 'Malte.Marquarding@csiro.au',
