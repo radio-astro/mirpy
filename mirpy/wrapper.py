@@ -1,4 +1,28 @@
+# Copyright (c) 2009-2014 CSIRO
+# Australia Telescope National Facility (ATNF)
+# Commonwealth Scientific and Industrial Research Organisation (CSIRO)
+# PO Box 76, Epping NSW 1710, Australia
+# atnf-enquiries@csiro.au
+#
+# This file is part of the ASKAP software distribution.
+#
+# The ASKAP software distribution is free software: you can redistribute it
+# and/or modify it under the terms of the GNU General Public License as
+# published by the Free Software Foundation; either version 2 of the License
+# or (at your option) any later version.
+#
+# This program is distributed in the hope that it will be useful,
+# but WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+# GNU General Public License for more details.
+#
+# You should have received a copy of the GNU General Public License
+# along with this program; if not, write to the Free Software
+# Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307 USA.
+#
+from __future__ import print_function
 __all__ = ["MiriadError", "Miriad"]
+
 import re
 import subprocess
 import warnings
@@ -7,10 +31,10 @@ from mirpy.commands import mir_commands
 class MiriadError(Exception):
     """An exception class for errors in miriad calls"""
     def __init__(self, value):
-	self.value = value
+        self.value = value
 
     def __str__(self):
-	return str(self.value)
+        return str(self.value)
 
 def match_in(key):
     """Is the key  the 'in' keyword"""
@@ -41,22 +65,22 @@ def mir_func(f, thefilter):
                                stderr=subprocess.PIPE)
         stdout, stderr = proc.communicate()
 
-    	lines = stderr.split('\n')
-    	warns = []
-    	errors = []
-    	for l in lines:
-	    wpfx = "### Warning: "
-	    epfx = "### Fatal Error: "
-	    if l.startswith(wpfx):
-	        warns.append(l[len(wpfx):])
-	    elif l.startswith(epfx):
-	        errors.append(l[len(epfx)+1:])
-	    else:
-	        errors.append(l)
+        lines = stderr.split('\n')
+        warns = []
+        errors = []
+        for l in lines:
+            wpfx = "### Warning: "
+            epfx = "### Fatal Error: "
+            if l.startswith(wpfx):
+                warns.append(l[len(wpfx):])
+            elif l.startswith(epfx):
+                errors.append(l[len(epfx)+1:])
+            else:
+                errors.append(l)
         if warns:
-	    msg = "'%s': " % f
-	    msg += "\n".join(warns)
-	    warnings.warn(msg)
+            msg = "'%s': " % f
+            msg += "\n".join(warns)
+            warnings.warn(msg)
 
         if proc.returncode != 0:
             raise MiriadError("\n".join(errors))
@@ -109,7 +133,7 @@ class Miriad(object):
             thefilter = self._filters.get(k, None)
             fn = mir_func(k, thefilter)
             fn.__doc__ = self._help(k)
-            fn.func_name = k
+            fn.__name__ = k
             return fn 
         else:
             return object.__getattribute__(self, k)
@@ -117,8 +141,8 @@ class Miriad(object):
     def _help(self, taskname):
         p = subprocess.Popen('miriad', shell=True, stdin=subprocess.PIPE, 
                              stdout=subprocess.PIPE, stderr=subprocess.PIPE)
-        print >>p.stdin, "help", taskname
-        print >>p.stdin, "exit"
+        p.stdin.write("{} {}\n{}\n".format("help", taskname, "exit")
+                      .encode('utf-8'))
         stdout = p.communicate()[0]
         return str(stdout)
 
