@@ -1,4 +1,4 @@
-# Copyright (c) 2009 CSIRO
+# Copyright (c) 2009-2014 CSIRO
 # Australia Telescope National Facility (ATNF)
 # Commonwealth Scientific and Industrial Research Organisation (CSIRO)
 # PO Box 76, Epping NSW 1710, Australia
@@ -28,7 +28,7 @@ def read(fname):
     return open(os.path.join(os.path.dirname(__file__), fname)).read()
 
 setup(name = 'mirpy',
-      version = 'trunk',
+      version = '0.3.0',
       description = 'Pure-python miriad CLI wrapper.',
       author = 'Malte Marquarding',
       author_email = 'Malte.Marquarding@csiro.au',
