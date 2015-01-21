@@ -31,7 +31,9 @@ def mir_commands():
     mirpath = os.path.split(mir)[0]
     return [ cmd for cmd in os.listdir(mirpath) \
                  if not (cmd.startswith('mir') or cmd.startswith('doc')
-                     or cmd.startswith('pg') or cmd.endswith('.exe')) ]
+                         or cmd.startswith('pgxwin') 
+                         or cmd.startswith('pgdisp')
+                         or cmd.endswith('.exe')) ]
 
 
 
