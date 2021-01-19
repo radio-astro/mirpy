@@ -65,7 +65,7 @@ def mir_func(f, thefilter):
                                stderr=subprocess.PIPE)
         stdout, stderr = proc.communicate()
 
-        lines = stderr.split('\n')
+        lines = stderr.decode("utf-8", "ignore").splitlines()
         warns = []
         errors = []
         for l in lines:
@@ -84,7 +84,7 @@ def mir_func(f, thefilter):
 
         if proc.returncode != 0:
             raise MiriadError("\n".join(errors))
-        out = stdout.strip()
+        out = stdout.decode("utf-8", "ignore").strip()
         if thefilter is not None:
             return thefilter(out)
         return out
